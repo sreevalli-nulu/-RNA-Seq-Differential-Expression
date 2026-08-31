@@ -98,8 +98,3 @@ This is a running log of decisions, tools (with versions), and literature refere
 - **Cause identified:** NCBI SRA server-side timeouts, not a local network or WSL issue — this is a known intermittent issue with SRA downloads and not something fixable client-side beyond retrying
 - **tmux troubleshooting note:** first attempt to run the download inside `tmux` failed silently (`[exited]` immediately after `tmux new`); tmux itself was later confirmed working in isolation (v3.4, `$SHELL=/bin/bash`), so the cause of the in-context failure is still unresolved — to be retried and verified *before* relying on it for the next download attempt
 
----
-
-### Week 2 — *(to be filled in as you progress)*
-
-### Week 3 — *(to be filled in as you progress)*
