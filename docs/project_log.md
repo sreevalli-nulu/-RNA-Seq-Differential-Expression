@@ -1,9 +1,4 @@
 # RNA-Seq DE Analysis — Project Log
-**Student:** Kumar | **Supervisor:** Dr. Nilofer | **Started:** Week 1
-
-This is a running log of decisions, tools (with versions), and literature referenced at each step. Update the "Tool Versions" table after each install/environment change, and add a new dated entry every time a major step is completed. This log is designed to be dropped straight into your GitHub README's "Methods" section at the end.
-
----
 
 ## Tool Versions Log
 
@@ -20,18 +15,6 @@ This is a running log of decisions, tools (with versions), and literature refere
 | DESeq2 (R/Bioconductor) | *(pending — Week 6)* | Week 6 (pending) | Differential expression testing |
 | clusterProfiler (R/Bioconductor) | *(pending — Week 7)* | Week 7 (pending) | Pathway enrichment |
 
-> **Why log exact versions?** Reproducibility. Anyone (including you, six months from now) should be able to look at this table and rebuild your exact environment. This is also standard practice reviewers/recruiters look for in a bioinformatics GitHub repo.
-
----
-
-## Reference Genome & Annotation Log
-
-| Resource | Source | Version/Build | Date Retrieved |
-|---|---|---|---|
-| Reference genome (FASTA) | *(pending — Week 3, ENSEMBL/GENCODE)* | | |
-| Gene annotation (GTF) | *(pending — Week 3)* | | |
-
----
 
 ## Dataset
 
@@ -66,9 +49,7 @@ This is a running log of decisions, tools (with versions), and literature refere
 | 3 | Love, M.I., Huber, W., Anders, S. (2014), *Genome Biology* | Primary publication | Original DESeq2 paper — cite this in your final writeup when you use DESeq2 | Bioconductor DESeq2 vignette: https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html |
 | 4 | NCBI SRA Run Selector, GSE50760 | Data source tool | Used to browse runs, compare file sizes, and select the final 10-sample subset | https://www.ncbi.nlm.nih.gov/Traces/study/?acc=GSE50760 |
 
-*(Add a row here every time you use a tutorial, paper, or tool's documentation to make a decision — even a Stack Overflow/Biostars post that resolved a specific error is worth logging with the URL, for your own future debugging reference.)*
 
----
 
 ## Weekly Entries
 
@@ -86,12 +67,10 @@ This is a running log of decisions, tools (with versions), and literature refere
 
 **Deliverables produced:**
 - `sample_metadata.csv`
-- Initial FastQC/MultiQC report *(pending completion)*
+- Initial FastQC/MultiQC report 
 
-**Open questions / notes for Dr. Nilofer:**
-- *(use this space to jot down anything you want to flag or ask your supervisor)*
 
-**Download progress note (added mid-Week 1):**
+**Download progress note (added mid-Week 1)
 - SRR975554 (P1 tumor): ✅ fully downloaded and compressed (541M + 538M gzipped FASTQ files)
 - SRR975572 (P1 normal): 🔄 partial — interrupted by NCBI SRA server timeouts on two separate attempts (once after ~12hrs, once after ~3hrs); `.sra.tmp` partial file retained for resume
 - Remaining 8 samples (SRR975556, SRR975574, SRR975559, SRR975577, SRR975564, SRR975582, SRR975567, SRR975585): ⬜ not yet started
