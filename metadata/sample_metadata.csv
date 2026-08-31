@@ -1,0 +1,11 @@
+SampleID,SRR_Accession,PatientID,Condition,Tissue
+S1,SRR975554,P1,Tumor,Primary tumor
+S2,SRR975572,P1,Normal,Adjacent normal
+S3,SRR975556,P2,Tumor,Primary tumor
+S4,SRR975574,P2,Normal,Adjacent normal
+S5,SRR975559,P3,Tumor,Primary tumor
+S6,SRR975577,P3,Normal,Adjacent normal
+S7,SRR975564,P4,Tumor,Primary tumor
+S8,SRR975582,P4,Normal,Adjacent normal
+S9,SRR975567,P5,Tumor,Primary tumor
+S10,SRR975585,P5,Normal,Adjacent normal

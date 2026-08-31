@@ -1,0 +1,34 @@
+# Raw and intermediate sequencing data (too large for git, re-downloadable via scripts/accessions)
+raw_data/
+trimmed/
+fastqc_raw/
+fastqc_trimmed/
+alignments/
+genome/
+counts/*.txt
+counts/*.tsv
+
+# Large file types, wherever they appear
+*.fastq
+*.fastq.gz
+*.sra
+*.bam
+*.bai
+*.sam
+*.fa
+*.fasta
+*.gtf
+*.gtf.gz
+
+# NCBI SRA cache
+.ncbi/
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+*.swp
+
+# R / RStudio (for later weeks)
+.Rhistory
+.RData
+.Rproj.user/
