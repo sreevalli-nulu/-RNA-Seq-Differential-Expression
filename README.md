@@ -1,7 +1,7 @@
 # RNA-Seq Differential Expression Analysis: Colorectal Cancer (Tumor vs. Normal)
 
-**Status:** ✅ Week 1 Complete — 🔄 Starting Week 2 of 8 (Quality Trimming)
-**Author:** Sreevalli 
+**Status:** ✅ Weeks 1–2 Complete — 🔄 Starting Week 3 of 8 (Alignment)
+
 
 ## Overview
 
@@ -29,9 +29,9 @@ Full sample metadata: [`metadata/sample_metadata.csv`](metadata/sample_metadata.
 ```
 Raw FASTQ (SRA download)          ✅ Complete — all 20 files downloaded & verified
     ↓ FastQC / MultiQC            ✅ Complete — see results/week1_multiqc_report.html
-    ↓ Trimmomatic or fastp        🔄 Up next (Week 2)
-    ↓ FastQC / MultiQC            — post-trim QC
-    ↓ STAR                        — alignment to reference genome
+    ↓ fastp                       ✅ Complete — see results/week2_multiqc_trimmed_report.html
+    ↓ FastQC / MultiQC            ✅ Complete — 82.5% overall read retention, Q20 rate 97.5%
+    ↓ STAR                        🔄 Up next (Week 3) — alignment to reference genome
     ↓ featureCounts               — gene-level read quantification
     ↓ DESeq2                      — differential expression testing
     ↓ clusterProfiler             — pathway enrichment
@@ -47,7 +47,7 @@ Raw FASTQ (SRA download)          ✅ Complete — all 20 files downloaded & ver
 | STAR | 2.7.10b | Read alignment |
 | SAMtools | 1.24 | BAM/SAM manipulation |
 | Subread (featureCounts) | v2.1.1 | Read quantification |
-| Trimmomatic / fastp | *(pending — Week 2 decision)* | Adapter/quality trimming |
+| fastp | 1.3.6 | Adapter/quality trimming |
 | DESeq2 | *(pending — Week 6)* | Differential expression |
 | clusterProfiler | *(pending — Week 7)* | Pathway enrichment |
 
@@ -57,7 +57,10 @@ Full environment setup and version log: [`docs/week1_setup_and_data_retrieval.md
 
 - **Raw QC report (all 10 samples, 20 FASTQ files):** [`results/week1_multiqc_report.html`](results/week1_multiqc_report.html)
   - ~29–35M reads per file, 101bp read length, 51–53% GC content, strong per-base quality with typical 3′ tapering, low adapter content
-  - Detailed interpretation and its implications for trimming parameters to be documented ahead of Week 2
+- **Trimmed QC report (post-fastp):** [`results/week2_multiqc_trimmed_report.html`](results/week2_multiqc_trimmed_report.html)
+  - 82.5% overall read retention (642.1M → 530.0M reads) after quality trimming (`--cut_right`, Q15, min length 25bp)
+  - Weighted average Q20 rate after trimming: 97.5%; ~48.8 billion bp retained across all samples
+  - Parameters tuned after investigating an initial high "too-short" failure rate; see [`docs/project_log.md`](docs/project_log.md) for the full investigation
 
 ## Repository Structure
 
