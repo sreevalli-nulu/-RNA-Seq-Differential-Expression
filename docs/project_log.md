@@ -48,13 +48,16 @@
 | 2 | Griffith Lab — GenViz Course, "Differential expression with DESeq2" | Tutorial/course | Worked example using this exact dataset (via EBI Expression Atlas ID E-GEOD-50760); useful for sanity-checking your DESeq2 results | https://genviz.org/module-04-expression/0004/02/01/DifferentialExpression/ |
 | 3 | Love, M.I., Huber, W., Anders, S. (2014), *Genome Biology* | Primary publication | Original DESeq2 paper — cite this in your final writeup when you use DESeq2 | Bioconductor DESeq2 vignette: https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html |
 | 4 | NCBI SRA Run Selector, GSE50760 | Data source tool | Used to browse runs, compare file sizes, and select the final 10-sample subset | https://www.ncbi.nlm.nih.gov/Traces/study/?acc=GSE50760 |
+| 5 | Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data | Tool documentation | QC reference for interpreting raw-read FastQC/MultiQC output | https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ |
+| 6 | Ewels, P. et al. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. *Bioinformatics* | Tool publication | Cite when describing the aggregate QC step in the final write-up | DOI: 10.1093/bioinformatics/btw354 |
 
 
 
 ## Weekly Entries
 
-### Week 1 — Environment Setup & Dataset Selection
-**Date:** *(fill in)*
+### Week 1 — Environment Setup, Dataset Selection & Raw QC ✅ COMPLETE
+**Date range:** ~Sep 1 – Sep 6, 2026
+
 **Actions:**
 - Installed WSL2 + Ubuntu 22.04 LTS.
 - Installed Miniforge (conda/mamba).
@@ -62,18 +65,28 @@
 - Set up standardized project folder structure at `~/rnaseq_project/` (`raw_data/`, `fastqc_raw/`, `trimmed/`, `fastqc_trimmed/`, `genome/`, `alignments/`, `counts/`, `results/`, `scripts/`) — verified with `ls -R`.
 - Evaluated dataset options; selected GSE50760 over the originally planned GSE183947 for its paired tumor/normal design and strong tutorial support.
 - Selected a 10-sample subset (5 patients, tumor + normal) for a "medium" scope balancing statistical power against download/compute time.
-- Finalized the 10 SRR accessions via SRA Run Selector, matched by patient position and balanced file size (see Dataset section above) — downloaded Accession List.
-- Set up standardized project folder structure (`raw_data/`, `fastqc_raw/`, `trimmed/`, `genome/`, `alignments/`, `counts/`, `results/`, `scripts/`).
+- Finalized the 10 SRR accessions via SRA Run Selector, matched by patient position and balanced file size (see Dataset section above).
+- **All 20 FASTQ files (10 samples × paired-end) downloaded and gzip-integrity-verified** (`gzip -t` passed on all) — download completed via a mix of direct SRA `prefetch`/`fasterq-dump` and Google Drive transfer for samples affected by NCBI server-side timeouts.
+- **FastQC v0.12.1 run on all 10 samples (20 files)**; aggregated with **MultiQC v1.35** into a single combined report.
 
 **Deliverables produced:**
-- `sample_metadata.csv`
-- Initial FastQC/MultiQC report 
+- `metadata/sample_metadata.csv`
+- `fastqc_raw/` — individual FastQC reports for all 20 FASTQ files
+- `fastqc_raw/multiqc_report.html` and `results/week1_multiqc_report.html` — combined QC report, pushed to GitHub
 
+**Raw QC headline results (from MultiQC report, generated 2026-09-06):**
+- Read depth: ~29–35 million reads per file across all 10 samples; read length uniform at 101 bp
+- GC content: 51–53% across samples, consistent with expected human transcriptome GC range
+- Per-base quality: strong (Phred >30) through most of the read, tapering toward the 3′ end — typical Illumina quality decay pattern
+- Adapter content: low overall (<1% of sequences per FastQC's own flagging), though MultiQC's status-check grid flags several samples "abnormal" on a few individual metrics — **not yet interpreted in detail; full review scheduled before finalizing trimming parameters in Week 2**
+- A few isolated N-content spikes at specific read positions in a subset of samples — noted for follow-up, not yet root-caused
 
-**Download progress note (added mid-Week 1)
-- SRR975554 (P1 tumor): ✅ fully downloaded and compressed (541M + 538M gzipped FASTQ files)
-- SRR975572 (P1 normal): 🔄 partial — interrupted by NCBI SRA server timeouts on two separate attempts (once after ~12hrs, once after ~3hrs); `.sra.tmp` partial file retained for resume
-- Remaining 8 samples (SRR975556, SRR975574, SRR975559, SRR975577, SRR975564, SRR975582, SRR975567, SRR975585): ⬜ not yet started
-- **Cause identified:** NCBI SRA server-side timeouts, not a local network or WSL issue — this is a known intermittent issue with SRA downloads and not something fixable client-side beyond retrying
-- **tmux troubleshooting note:** first attempt to run the download inside `tmux` failed silently (`[exited]` immediately after `tmux new`); tmux itself was later confirmed working in isolation (v3.4, `$SHELL=/bin/bash`), so the cause of the in-context failure is still unresolved — to be retried and verified *before* relying on it for the next download attempt
+**Infrastructure notes (environment troubleshooting during Week 1):**
+- WSL became unstable due to the Windows C: drive running critically low on free space (down to ~1.4GB); root cause confirmed via Windows Event Viewer (Volsnap Event ID 36), not a RAM or software issue.
+- Fixed by migrating the entire WSL Ubuntu-22.04 installation from C: to D: (`wsl --export` / `--unregister` / `--import`) and raising `.wslconfig` memory allocation to 14GB as an added safety margin.
+- A subsequent WSL disk corruption event (`WSL_E_DISK_CORRUPTED`) required a full Ubuntu reinstall directly onto D:. Recovery was low-friction because all documentation had already been pushed to GitHub. Local Linux username changed from `sreevalli` to `valli` as part of this rebuild.
+- The local git repository connection did not survive the reinstall (no `.git` folder remained locally), even though the remote GitHub repo was intact. Reconnected via `git init` + `git remote add origin` + `git fetch`/`git pull`, preserving all existing GitHub history without re-uploading raw data.
+- Repository visibility changed from private to public.
+- Git commit email configured to GitHub's private noreply address (repo-local `git config user.email`, not global) to keep the personal email off public commits.
 
+**Week 1 status: ✅ COMPLETE.** Proceeding to Week 2 (quality trimming) next; detailed MultiQC interpretation to inform trimming parameter choices is queued as the first task of Week 2.
