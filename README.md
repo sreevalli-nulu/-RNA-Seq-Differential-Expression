@@ -1,7 +1,7 @@
 # RNA-Seq Differential Expression Analysis: Colorectal Cancer (Tumor vs. Normal)
 
-**Status:** 🔄 In Progress — Week 1 of 8 (Data Retrieval & Initial QC)
-**Author:** Kumar | **Supervisor:** Dr. Nilofer
+**Status:** ✅ Week 1 Complete — 🔄 Starting Week 2 of 8 (Quality Trimming)
+**Author:** Sreevalli 
 
 ## Overview
 
@@ -27,14 +27,14 @@ Full sample metadata: [`metadata/sample_metadata.csv`](metadata/sample_metadata.
 ## Pipeline
 
 ```
-Raw FASTQ (SRA download)
-    ↓ FastQC / MultiQC          — initial QC
-    ↓ Trimmomatic or fastp      — adapter/quality trimming
-    ↓ FastQC / MultiQC          — post-trim QC
-    ↓ STAR                      — alignment to reference genome
-    ↓ featureCounts             — gene-level read quantification
-    ↓ DESeq2                    — differential expression testing
-    ↓ clusterProfiler           — pathway enrichment
+Raw FASTQ (SRA download)          ✅ Complete — all 20 files downloaded & verified
+    ↓ FastQC / MultiQC            ✅ Complete — see results/week1_multiqc_report.html
+    ↓ Trimmomatic or fastp        🔄 Up next (Week 2)
+    ↓ FastQC / MultiQC            — post-trim QC
+    ↓ STAR                        — alignment to reference genome
+    ↓ featureCounts               — gene-level read quantification
+    ↓ DESeq2                      — differential expression testing
+    ↓ clusterProfiler             — pathway enrichment
 ```
 
 ## Tools & Versions
@@ -47,10 +47,17 @@ Raw FASTQ (SRA download)
 | STAR | 2.7.10b | Read alignment |
 | SAMtools | 1.24 | BAM/SAM manipulation |
 | Subread (featureCounts) | v2.1.1 | Read quantification |
+| Trimmomatic / fastp | *(pending — Week 2 decision)* | Adapter/quality trimming |
 | DESeq2 | *(pending — Week 6)* | Differential expression |
 | clusterProfiler | *(pending — Week 7)* | Pathway enrichment |
 
 Full environment setup and version log: [`docs/week1_setup_and_data_retrieval.md`](docs/week1_setup_and_data_retrieval.md)
+
+## Results So Far
+
+- **Raw QC report (all 10 samples, 20 FASTQ files):** [`results/week1_multiqc_report.html`](results/week1_multiqc_report.html)
+  - ~29–35M reads per file, 101bp read length, 51–53% GC content, strong per-base quality with typical 3′ tapering, low adapter content
+  - Detailed interpretation and its implications for trimming parameters to be documented ahead of Week 2
 
 ## Repository Structure
 
@@ -61,7 +68,8 @@ Full environment setup and version log: [`docs/week1_setup_and_data_retrieval.md
 ├── docs/
 │   ├── week1_setup_and_data_retrieval.md
 │   └── project_log.md            # full running log: decisions, tool versions, literature
-├── results/                      # QC reports, count matrices, DE results, figures (added as pipeline progresses)
+├── results/
+│   └── week1_multiqc_report.html # raw-read QC report (Week 1 deliverable)
 └── README.md
 ```
 
@@ -82,3 +90,5 @@ See [`docs/project_log.md`](docs/project_log.md) for a detailed, dated log of ev
 1. Kim, S.K. et al. (2014). Comprehensive molecular characterization of clinical colorectal cancers by RNA-seq. *PLoS ONE*. PMID: 25049118.
 2. Love, M.I., Huber, W., Anders, S. (2014). Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. *Genome Biology*.
 3. Griffith Lab GenViz Course — Differential Expression tutorial (used as a reference/sanity-check resource): https://genviz.org/module-04-expression/
+4. Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data.
+5. Ewels, P. et al. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. *Bioinformatics*. DOI: 10.1093/bioinformatics/btw354
