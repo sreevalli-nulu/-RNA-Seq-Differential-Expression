@@ -90,3 +90,59 @@
 - Git commit email configured to GitHub's private noreply address (repo-local `git config user.email`, not global) to keep the personal email off public commits.
 
 **Week 1 status: ✅ COMPLETE.** Proceeding to Week 2 (quality trimming) next; detailed MultiQC interpretation to inform trimming parameter choices is queued as the first task of Week 2.
+
+### Week 2 — Quality Trimming ✅ COMPLETE
+**Date range:** ~Sep 6, 2026
+
+**Tool decision:** chose **fastp** over Trimmomatic — single-command syntax, auto-adapter-detection, built-in HTML/JSON QC report per sample. Installed via `mamba install -c bioconda -c conda-forge fastp` (not `apt`, to keep the tool inside the versioned `rnaseq` conda environment). **fastp v1.3.6** verified.
+
+**Pipeline decision (scope):** adopting a **hybrid pipeline** going forward — command-line (WSL/conda) through Week 4 (trimming, alignment, counting), switching to **Galaxy** (or R/RStudio) for Week 5–7 (DESeq2, clusterProfiler), since Bioconductor R package installation is the most fragile part of a local WSL setup and Galaxy provides these as ready-made tools. Command-line tools already installed (STAR, SAMtools, featureCounts) carry no switching cost, so there's no reason to move those steps off the command line.
+
+**Raw QC interpretation (informing trimming parameters):**
+- Reviewed Week 1 MultiQC report: adapter content was low (<1%) across all samples — adapter trimming was a low priority
+- Main issue identified: steep 3′ per-base quality decay (typical Illumina pattern), dropping from Phred >30 to ~20–25 by read end
+- Conclusion: prioritize quality-based trimming (`--cut_right`) over adapter trimming
+
+**Parameter tuning (tested on SRR975554 before batch run):**
+- **First attempt:** `--cut_right_mean_quality 20`, `--length_required 36` → only 72.8% of reads retained (50.4M / 69.2M), with 18.6M reads (27%) failing as "too short" after trimming
+- **Investigated insert size** to rule out short-fragment library prep as the cause: fastp's own reported "insert size peak" of 46bp was misleading — it only reflects the subset of read pairs short enough for R1/R2 to overlap (~1.6M of 34.6M pairs); that subset's true distribution peaked at 140–159bp (34.7%), consistent with a normal RNA-seq fragment size. Confirmed insert size was **not** the cause of read loss.
+- **Root cause:** aggressive Q20 tail-quality trimming was cutting deep enough into naturally-decaying reads to push many below the 36bp minimum length cutoff
+- **Revised parameters:** `--cut_right_mean_quality 15` (Q15 ≈ 97% base-call accuracy — sufficient for RNA-seq read counting, vs. Q20's variant-calling-grade 99%), `--length_required 25` → retention improved to 83.8% (57.95M / 69.2M reads), "too short" failures dropped from 18.6M to 11.1M (−41%). Insert size peak recalculated to 149bp on the re-run, consistent with the true fragment size distribution found during investigation.
+
+**Final fastp command used for all 10 samples:**
+```
+fastp -i raw_data/{sample}_1.fastq.gz -I raw_data/{sample}_2.fastq.gz \
+  -o trimmed/{sample}_1.trimmed.fastq.gz -O trimmed/{sample}_2.trimmed.fastq.gz \
+  --cut_right --cut_right_window_size 4 --cut_right_mean_quality 15 \
+  --length_required 25 --thread 4 \
+  --html trimmed/{sample}_fastp.html --json trimmed/{sample}_fastp.json
+```
+
+**Batch trimming results (all 10 samples):**
+
+| Sample | Reads before | Reads after | % Retained |
+|---|---|---|---|
+| SRR975554 | 69,123,366 | 57,953,032 | 83.8% |
+| SRR975556 | 61,802,386 | 52,102,678 | 84.3% |
+| SRR975559 | 58,153,246 | 47,649,856 | 81.9% |
+| SRR975564 | 65,054,980 | 53,096,586 | 81.6% |
+| SRR975567 | 61,652,534 | 50,501,266 | 81.9% |
+| SRR975572 | 63,282,332 | 52,189,876 | 82.5% |
+| SRR975574 | 64,283,782 | 53,849,074 | 83.8% |
+| SRR975577 | 66,679,458 | 54,521,890 | 81.8% |
+| SRR975582 | 64,334,584 | 52,947,520 | 82.3% |
+| SRR975585 | 67,739,046 | 55,139,100 | 81.4% |
+| **TOTAL** | **642,105,714** | **529,950,878** | **82.5%** |
+
+- Weighted average Q20 rate after trimming: **97.53%**
+- Total bases retained after trimming: **48.83 billion bp**
+- Consistent 81–84% retention across all samples indicates the tuned parameters generalized well, rather than being fit to a single sample
+
+**Post-trim QC:** ran FastQC v0.12.1 on all 20 trimmed FASTQ files, aggregated with MultiQC v1.35 into `fastqc_trimmed/multiqc_trimmed_report.html`, copied to `results/week2_multiqc_trimmed_report.html` for GitHub.
+
+**Deliverables produced:**
+- `trimmed/` — 20 trimmed FASTQ files + per-sample fastp HTML/JSON reports
+- `fastqc_trimmed/` — 20 post-trim FastQC reports + combined MultiQC report
+- `results/week2_multiqc_trimmed_report.html` — pushed to GitHub
+
+**Week 2 status: ✅ COMPLETE.** Proceeding to Week 3 (STAR alignment + SAMtools BAM processing) next.
