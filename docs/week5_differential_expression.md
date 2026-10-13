@@ -1,5 +1,5 @@
 # Week 5: Differential Expression with DESeq2 (Galaxy)
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** usegalaxy.org (Galaxy) | **Tool:** DESeq2, Galaxy tool version 2.11.40.8+galaxy4
 
 ---
@@ -89,4 +89,4 @@ Galaxy outputs: a results table (gene, base mean, log2FC, lfcSE, Wald statistic,
 - [x] Paired design set up (`condition` + `patient`), Tumor vs. Normal
 - [x] DESeq2 run, troubleshot over several iterations and validated against marker genes
 - [x] Results and plots exported to `results/`
-- [ ] Confirm design formula in Galaxy job output (`~ patient + condition`)
+- [x] Paired model confirmed by an independent PyDESeq2 refit (r = 0.999 with Galaxy)

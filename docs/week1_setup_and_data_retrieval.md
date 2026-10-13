@@ -1,5 +1,5 @@
 # Week 1: Environment Setup, Dataset Retrieval & Initial QC
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** Windows + WSL2 (Ubuntu 22.04) | **Time budget:** ~1 hr/day
 
 ---
@@ -7,7 +7,7 @@
 ## Dataset: GSE50760
 
 - **Source:** [GSE50760](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE50760) (Gene Expression Omnibus)
-- **Original publication:** Kim, S.K. et al. (2014), *PLoS ONE*. PMID: [25049118](https://pubmed.ncbi.nlm.nih.gov/25049118/)
+- **Original publication:** Kim, S.K. et al. (2014), *Molecular Oncology* 8(8):1653–1666, DOI: [10.1016/j.molonc.2014.06.016](https://doi.org/10.1016/j.molonc.2014.06.016)
 - **Why this dataset:** paired-end Illumina RNA-seq with matched normal / primary tumor / liver metastasis samples from the *same patients* — a clean, biologically clear tumor-vs-normal comparison with strong tutorial support (used in the Griffith Lab GenViz course, among others).
 - **Subset used:** 10 samples (5 patients × 1 tumor + 1 matched normal), chosen from the full 54-sample study for computational feasibility on a WSL-based laptop workflow.
 

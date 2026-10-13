@@ -21,7 +21,7 @@
 ## Dataset
 
 **GSE50760** — Gene Expression Omnibus
-- **Source publication:** Kim, S.K. et al. (2014), *PLoS ONE* — original RNA-seq colorectal cancer study using this cohort (PMID: 25049118).
+- **Source publication:** Kim, S.K. et al. (2014), *Molecular Oncology* 8(8):1653–1666 — original colorectal cancer study using this cohort (DOI: 10.1016/j.molonc.2014.06.016).
 - **Design used in this project:** 10 samples (5 patients × tumor + matched normal), subset from the full 54-sample study (18 patients × normal/tumor/liver metastasis).
 - **Rationale for selection:** paired tumor/normal design from the same patients; widely used as a teaching dataset (see literature log below); manageable download size for a WSL-based laptop workflow on a 1 hr/day budget.
 - **Patient pairing method:** GSE50760 submits samples in blocks by tissue type (tumor block, then normal block, then metastasis block), with patients in matching order across blocks — this is the standard GEO convention for this series and is how the dataset is used in published literature. Row N in the tumor block corresponds to row N in the normal block.
@@ -46,7 +46,7 @@
 
 | # | Source | Type | Relevance | Link |
 |---|---|---|---|---|
-| 1 | Kim, S.K. et al., *PLoS ONE* (2014) | Primary publication | Original study generating the GSE50760 dataset | PMID: 25049118 |
+| 1 | Kim, S.-K. et al., *Molecular Oncology* (2014) | Primary publication | Original study generating the GSE50760 dataset | DOI: 10.1016/j.molonc.2014.06.016 |
 | 2 | Griffith Lab — GenViz Course, "Differential expression with DESeq2" | Tutorial/course | Worked example using this exact dataset (via EBI Expression Atlas ID E-GEOD-50760); useful for sanity-checking your DESeq2 results | https://genviz.org/module-04-expression/0004/02/01/DifferentialExpression/ |
 | 3 | Love, M.I., Huber, W., Anders, S. (2014), *Genome Biology* | Primary publication | Original DESeq2 paper — cite this in your final writeup when you use DESeq2 | Bioconductor DESeq2 vignette: https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html |
 | 4 | NCBI SRA Run Selector, GSE50760 | Data source tool | Used to browse runs, compare file sizes, and select the final 10-sample subset | https://www.ncbi.nlm.nih.gov/Traces/study/?acc=GSE50760 |

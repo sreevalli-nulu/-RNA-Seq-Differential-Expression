@@ -1,5 +1,5 @@
 # Week 6: Annotation, Summary Statistics & Visualization
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** WSL2, conda environment `rnaseq` (Python: pandas, numpy, scipy, matplotlib, seaborn) | **Script:** `scripts/week6_analysis.py`
 
 ---

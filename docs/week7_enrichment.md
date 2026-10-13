@@ -1,5 +1,5 @@
 # Week 7: Pathway & Gene Ontology Enrichment
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** WSL2, conda environment `rnaseq` | **Script:** `scripts/week7_enrichment.py` | **Method:** over-representation analysis with Enrichr (via the `gseapy` Python package)
 
 ---
@@ -66,4 +66,4 @@ Three themes emerge, consistent with the gene-level results from Weeks 5–6:
 - [x] Up- and down-regulated DEG lists tested separately against GO BP, KEGG and MSigDB Hallmark
 - [x] Results tables, summary and figure generated and committed
 - [x] Themes interpreted against the Week 5–6 gene-level findings
-- [ ] Record the `gseapy` version in the tool table (`pip show gseapy`)
+- [x] gseapy 1.3.1 (see environment.yml)

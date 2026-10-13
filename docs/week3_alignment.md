@@ -1,5 +1,5 @@
 # Week 3: Reference Genome Preparation & STAR Alignment
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** Windows + WSL2 (Ubuntu 22.04), conda environment `rnaseq`
 
 ---

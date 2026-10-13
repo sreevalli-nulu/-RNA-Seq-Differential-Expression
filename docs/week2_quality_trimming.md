@@ -1,5 +1,5 @@
 # Week 2: Quality Control & Trimming
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** Windows + WSL2 (Ubuntu 22.04) | **Time budget:** ~1 hr/day
 
 ---

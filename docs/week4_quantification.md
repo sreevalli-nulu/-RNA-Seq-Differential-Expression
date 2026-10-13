@@ -1,5 +1,5 @@
 # Week 4: Gene-Level Read Quantification (featureCounts)
-**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal) | **Supervisor:** Dr. Nilofer
+**Project:** RNA-Seq Differential Expression (Colorectal Tumor vs. Matched Normal)
 **Platform:** Windows + WSL2 (Ubuntu 22.04), conda environment `rnaseq` | **Tool:** featureCounts (Subread v2.1.1)
 
 ---
