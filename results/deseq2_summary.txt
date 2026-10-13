@@ -1,0 +1,46 @@
+DESeq2 summary: Tumor vs Normal (positive log2FC = higher in tumor)
+Genes in table:                        78941
+Genes with an adjusted p-value (tested): 23047
+padj < 0.05:                              4661
+padj < 0.05 and |log2FC| >= 1:           3313
+   up in tumor:                        1368
+   down in tumor:                      1945
+
+Top 10 by adjusted p-value:
+gene_name  log2FoldChange     padj
+    BEST4           -5.79 3.89e-28
+      CA7           -5.52 2.55e-26
+     COMP            7.95 4.03e-23
+     WNT2            7.77 4.67e-22
+     ETV4            4.78 1.75e-21
+   PHLPP2            -2.7 4.31e-20
+   PRSS22            3.68 1.51e-19
+    CD79A           -2.64 6.67e-19
+   C2CD4A            3.99 4.81e-18
+   HSD3B2            -6.7 2.49e-17
+
+Top 10 up in tumor (largest log2FC among significant genes):
+gene_name  log2FoldChange     padj
+     KLK6             8.1 2.28e-12
+     COMP            7.95 4.03e-23
+     WNT2            7.77 4.67e-22
+     CST1            7.45 6.87e-06
+     KLK7             7.3   0.0354
+  COL10A1            6.81 8.81e-07
+     MMP3             6.7 2.59e-06
+LINC01614            6.55 6.66e-09
+      WT1            6.44 4.79e-08
+    KRT17            6.43 7.52e-06
+
+Top 10 down in tumor (most negative log2FC among significant genes):
+      gene_name  log2FoldChange     padj
+          OTOP2           -8.26 7.93e-07
+           AQP8           -7.87 7.77e-10
+          OTOP3           -7.58 2.97e-10
+            CA1            -7.3 2.84e-07
+         HSD3B2            -6.7 2.49e-17
+ENSG00000298053           -6.45 8.47e-07
+           MYOC           -6.39 9.49e-13
+ENSG00000254645           -6.24 8.09e-05
+       SLC30A10           -6.08 9.99e-06
+          CLCA4           -6.07 2.34e-07

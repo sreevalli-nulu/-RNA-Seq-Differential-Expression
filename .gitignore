@@ -32,3 +32,6 @@ Thumbs.db
 .Rhistory
 .RData
 .Rproj.user/
+*Zone.Identifier
+counts/per_sample/
+counts/strand_test/
