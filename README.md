@@ -1,7 +1,7 @@
 # RNA-Seq Differential Expression Analysis: Colorectal Cancer (Tumor vs. Matched Normal)
 
 **Status:** ✅ Weeks 1–7 complete — 🔄 Week 8 (final write-up) in progress
-**Author:** Kumar | **Supervisor:** Dr. Nilofer
+**Author:** Sreevalli
 
 ## Overview
 
@@ -12,7 +12,7 @@ This project identifies differentially expressed genes (DEGs) between primary co
 ## Dataset
 
 - **Source:** [GSE50760](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE50760) (Gene Expression Omnibus)
-- **Original publication:** Kim, S.K. et al. (2014), *PLoS ONE*. PMID: [25049118](https://pubmed.ncbi.nlm.nih.gov/25049118/)
+- **Original publication:** Kim, S.-K. et al. (2014), *Molecular Oncology* 8(8):1653–1666. DOI: [10.1016/j.molonc.2014.06.016](https://doi.org/10.1016/j.molonc.2014.06.016)
 - **Subset used:** 10 paired-end samples — 5 patients × (1 primary tumor + 1 matched normal colon sample each)
 - **Design rationale:** paired tumor/normal samples from the same patients increase statistical power for DE testing; the full dataset (54 samples, 18 patients) was subset for computational feasibility
 
@@ -78,8 +78,8 @@ Detailed tables: [`results/deseq2_summary.txt`](results/deseq2_summary.txt), [`r
 | Subread (featureCounts) | v2.1.1 | Read quantification |
 | GENCODE | release 50 (GRCh38.p14), primary assembly, Basic annotation | Reference genome and annotation |
 | DESeq2 (Galaxy tool, usegalaxy.org) | 2.11.40.8+galaxy4 | Differential expression |
-| Python (pandas, numpy, scipy, matplotlib, seaborn) | see `environment.yml` | Annotation, statistics, figures |
-| Enrichr via gseapy | see `environment.yml` | Over-representation analysis (GO Biological Process, KEGG, MSigDB Hallmark) |
+| Python (pandas 3.0.6, matplotlib 3.11.2, numpy, scipy, seaborn, adjustText 1.4.0) | Python 3.14; full list in `environment.yml` | Annotation, statistics, figures |
+| Enrichr via gseapy | gseapy 1.3.1 | Over-representation analysis (GO Biological Process, KEGG, MSigDB Hallmark) |
 
 Full environment setup and version log: [`docs/week1_setup_and_data_retrieval.md`](docs/week1_setup_and_data_retrieval.md) and [`docs/project_log.md`](docs/project_log.md).
 
@@ -134,7 +134,7 @@ Raw and intermediate data (FASTQ, BAM, genome files, STAR index) are excluded vi
 - **Counting choices:** multi-mapped reads are not counted (6.4% of reads on average); the library is unstranded.
 - **Enrichment:** Enrichr's web service uses its default background gene set, not the expressed genes of this experiment.
 - **Fold changes:** the Galaxy DESeq2 output is unshrunken, so effect sizes of low-count genes can be inflated; rankings by adjusted p-value are unaffected.
-- **Design formula:** `patient` was included as a second factor on the Galaxy form; confirmation of the exact model formula in the job output is noted as an open item in `docs/week5_differential_expression.md`.
+- **Design formula:** Galaxy's output message lists only `condition` under "other factors in design", so the paired model was checked independently: refitting the same counts with PyDESeq2 (`~ patient + condition`) reproduced the Galaxy test statistics (r = 0.999), whereas a condition-only model did not (r = 0.967). The paired model was therefore used.
 
 ## Progress Log
 
@@ -142,7 +142,7 @@ See [`docs/project_log.md`](docs/project_log.md) for a detailed log of every ste
 
 ## References
 
-1. Kim, S.K. et al. (2014). Comprehensive molecular characterization of clinical colorectal cancers by RNA-seq. *PLoS ONE*. PMID: 25049118.
+1. Kim, S.-K., Kim, S.-Y., Kim, J. H., Roh, S. A., Cho, D.-H., Kim, Y. S., & Kim, J. C. (2014). A nineteen gene-based risk score classifier predicts prognosis of colorectal cancer patients. *Molecular Oncology*, 8(8), 1653–1666. https://doi.org/10.1016/j.molonc.2014.06.016
 2. Love, M.I., Huber, W., Anders, S. (2014). Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. *Genome Biology* 15:550.
 3. Griffith Lab GenViz Course — Differential Expression tutorial (reference/sanity-check resource): https://genviz.org/module-04-expression/
 4. Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data.
