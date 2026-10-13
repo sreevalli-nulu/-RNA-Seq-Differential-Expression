@@ -8,12 +8,14 @@
 | sra-tools | 3.4.1 | Week 1 ✅ | SRA download (prefetch, fasterq-dump) |
 | FastQC | v0.12.1 | Week 1 ✅ | Raw/trimmed read QC |
 | MultiQC | 1.35 | Week 1 ✅ | Aggregate QC reporting |
-| STAR | 2.7.10b | Week 1 ✅ (install verified; first alignment run in Week 3) | Read alignment |
+| STAR | 2.7.10b | Week 1 ✅; used in Week 3 ✅ | Genome index + alignment of 10 samples |
 | SAMtools | 1.24 | Week 1 ✅ | BAM/SAM manipulation |
-| Subread (featureCounts) | v2.1.1 | Week 1 ✅ (install verified; first run in Week 4) | Read quantification |
-| Trimmomatic / fastp | *(pending — Week 2 decision)* | Week 2 (pending) | Adapter/quality trimming |
-| DESeq2 (R/Bioconductor) | *(pending — Week 6)* | Week 6 (pending) | Differential expression testing |
-| clusterProfiler (R/Bioconductor) | *(pending — Week 7)* | Week 7 (pending) | Pathway enrichment |
+| Subread (featureCounts) | v2.1.1 | Week 1 ✅; used in Week 4 ✅ | Gene-level read quantification |
+| fastp | 1.3.6 | Week 2 ✅ | Adapter/quality trimming (chosen over Trimmomatic) |
+| GENCODE (reference) | Release 50, GRCh38.p14 primary assembly + Basic annotation | Week 3 ✅ | Genome FASTA and gene annotation (index and featureCounts use the same GTF) |
+| DESeq2 (Galaxy tool, usegalaxy.org) | 2.11.40.8+galaxy4 | Week 5 ✅ | Differential expression testing (paired design) |
+| Python analysis stack (pandas, numpy, scipy, matplotlib, seaborn, adjustText) | *(record with `mamba list` / `pip list`)* | Week 6 ✅ | Annotation, summary statistics, figures |
+| Enrichr via gseapy | *(record with `pip show gseapy`)* | Week 7 ✅ | Over-representation analysis (replaced the originally planned clusterProfiler; see Week 7 entry) |
 
 
 ## Dataset
@@ -50,6 +52,17 @@
 | 4 | NCBI SRA Run Selector, GSE50760 | Data source tool | Used to browse runs, compare file sizes, and select the final 10-sample subset | https://www.ncbi.nlm.nih.gov/Traces/study/?acc=GSE50760 |
 | 5 | Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data | Tool documentation | QC reference for interpreting raw-read FastQC/MultiQC output | https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ |
 | 6 | Ewels, P. et al. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. *Bioinformatics* | Tool publication | Cite when describing the aggregate QC step in the final write-up | DOI: 10.1093/bioinformatics/btw354 |
+| 7 | Chen, S., Zhou, Y., Chen, Y., Gu, J. (2018). fastp: an ultra-fast all-in-one FASTQ preprocessor. *Bioinformatics* 34(17):i884–i890 | Tool publication | Cite for adapter/quality trimming (Week 2) | DOI: 10.1093/bioinformatics/bty560 |
+| 8 | Dobin, A. et al. (2013). STAR: ultrafast universal RNA-seq aligner. *Bioinformatics* 29(1):15–21 | Tool publication | Cite for alignment (Week 3) | DOI: 10.1093/bioinformatics/bts635 |
+| 9 | Frankish, A. et al. (2021). GENCODE 2021. *Nucleic Acids Research* 49(D1):D916–D923 | Resource publication | Cite for the reference annotation (release 50 used; cite the GENCODE release page for the exact version) | DOI: 10.1093/nar/gkaa1087 |
+| 10 | Danecek, P. et al. (2021). Twelve years of SAMtools and BCFtools. *GigaScience* 10(2):giab008 | Tool publication | Cite for BAM validation (Week 3) | DOI: 10.1093/gigascience/giab008 |
+| 11 | Liao, Y., Smyth, G.K., Shi, W. (2014). featureCounts: an efficient general purpose program for assigning sequence reads to genomic features. *Bioinformatics* 30(7):923–930 | Tool publication | Cite for read quantification (Week 4) | DOI: 10.1093/bioinformatics/btt656 |
+| 12 | The Galaxy Community (2024). The Galaxy platform for accessible, reproducible, and collaborative data analyses: 2024 update. *Nucleic Acids Research* 52(W1):W83–W94 | Platform publication | Cite for the Galaxy-hosted DESeq2 step (Week 5) | DOI: 10.1093/nar/gkae410 |
+| 13 | Chen, E.Y. et al. (2013). Enrichr: interactive and collaborative HTML5 gene list enrichment analysis tool. *BMC Bioinformatics* 14:128; Kuleshov, M.V. et al. (2016). *Nucleic Acids Research* 44(W1):W90–W97; Xie, Z. et al. (2021). *Current Protocols* 1(3):e90 | Tool publications | Cite for over-representation analysis (Week 7) | DOI: 10.1186/1471-2105-14-128 |
+| 14 | Fang, Z., Liu, X., Peltz, G. (2023). GSEApy: a comprehensive package for performing gene set enrichment analysis in Python. *Bioinformatics* 39(1):btac757 | Tool publication | Cite for the Python interface to Enrichr (Week 7) | DOI: 10.1093/bioinformatics/btac757 |
+| 15 | Liberzon, A. et al. (2015). The Molecular Signatures Database Hallmark gene set collection. *Cell Systems* 1(6):417–425 | Resource publication | Cite for the Hallmark gene sets used in Week 7 | DOI: 10.1016/j.cels.2015.12.004 |
+
+*Citation details above were written from memory of the original papers; verify each against the publisher record before submitting the final report.*
 
 
 
@@ -146,3 +159,48 @@ fastp -i raw_data/{sample}_1.fastq.gz -I raw_data/{sample}_2.fastq.gz \
 - `results/week2_multiqc_trimmed_report.html` — pushed to GitHub
 
 **Week 2 status: ✅ COMPLETE.** Proceeding to Week 3 (STAR alignment + SAMtools BAM processing) next.
+
+### Week 3 — Reference Genome, STAR Index & Alignment ✅ COMPLETE
+**Date range:** Sep – Oct 2026 (multi-week gap while indexing and alignment ran). Full detail: `docs/week3_alignment.md`
+
+**Decisions:**
+- Reference: **GRCh38 primary assembly + GENCODE release 50**. The Comprehensive annotation caused a STAR out-of-memory kill at junction insertion, so the **Basic** annotation was used with `--genomeSAsparseD 3 --limitGenomeGenerateRAM 14000000000 --sjdbOverhang 90`. WSL memory raised to 18GB.
+- Long jobs run with `nohup ... & disown` after a foreground indexing attempt died silently when the terminal closed.
+
+**Results:**
+- STAR 2.7.10b index built (~13.5GB). All 10 samples aligned (`--outSAMtype BAM SortedByCoordinate`, ~1.7–2 hours per sample); all 10 BAMs pass `samtools quickcheck`.
+- Mapping: uniquely mapped 89.5–92.6% (mean 90.9%), multi-mapped 4.9–7.8% (mean 6.4%), total mapped mean 97.3%; no outlier samples.
+- Interruptions (Windows restart, laptop sleep, one batch stopping after 9 samples) were handled by re-running only affected samples; none affected the results.
+
+### Week 4 — Quantification with featureCounts ✅ COMPLETE
+**Date:** Oct 13, 2026. Full detail: `docs/week4_quantification.md`
+
+- **Strandedness determined empirically** on SRR975554: `-s 0` assigned 70.5% of alignments vs ~41% for `-s 1` and `-s 2` (almost identical) → library is **unstranded**; `-s 0` used.
+- featureCounts v2.1.1, `-p --countReadPairs -s 0`, same GENCODE v50 Basic GTF as the index; multi-mapping and multi-overlapping reads not counted (defaults). 78,941 genes quantified.
+- Per-sample assignment 63.0–74.9% (mean 68.1%), 19–23M counted fragments per sample.
+- Deliverables: `counts/gene_counts_matrix.tsv`, `counts/gene_id_to_name.tsv`, featureCounts summary.
+
+### Week 5 — Differential Expression (DESeq2 on Galaxy) ✅ COMPLETE
+**Date:** Oct 13, 2026. Full detail: `docs/week5_differential_expression.md`
+
+- DESeq2 (Galaxy 2.11.40.8+galaxy4) with `condition` (Tumor first, so log2FC = Tumor vs. Normal) and `patient` as a second factor to model the pairing. Input: 10 per-sample count files (this tool version does not take a single matrix).
+- Several runs were needed: unnamed factor levels (duplicate-level error), inverted comparison direction, labels swapped relative to files, and duplicated level names. Each was diagnosed from the output rather than accepted because the job turned green.
+- **Validation:** BEST4 (−5.79) and CA7 (−5.52) down; COMP (+7.95), WNT2 (+7.77), ETV4 (+4.78) up — matches known colorectal cancer biology.
+- **Results:** 23,047 genes tested; 4,661 with padj < 0.05; **3,313 DEGs** (padj < 0.05, |log2FC| ≥ 1): 1,368 up and 1,945 down in tumor.
+- Open item: confirm the model formula (`~ patient + condition`) in the Galaxy job output.
+
+### Week 6 — Annotation & Visualization ✅ COMPLETE
+**Date:** Oct 13, 2026. Full detail: `docs/week6_visualization.md`
+
+- `scripts/week6_analysis.py` annotates results with gene names and produces the summary tables, PCA, volcano plot and top-50 heatmap (size factors by median of ratios; log2(norm+1) for plotting).
+- PCA: PC1 (61%) separates tumor from normal; normals cluster tightly, tumors are heterogeneous. **P2 tumor (SRR975556)** is the most normal-like tumor (probable lower tumor purity) and **P4 tumor (SRR975564)** is a PC2 outlier; both kept and reported as limitations.
+- Heatmap: loss of normal colon-lining and immune genes, gain of stromal/ECM and stemness genes.
+
+### Week 7 — Pathway Enrichment ✅ COMPLETE
+**Date:** Oct 13, 2026. Full detail: `docs/week7_enrichment.md`
+
+- **Method change:** the plan named clusterProfiler (R); enrichment was run instead as over-representation analysis with **Enrichr via gseapy (Python)**, because it is scripted and reproducible in the existing environment and avoids a fragile Bioconductor install. Limitation: Enrichr's default background gene set is used.
+- Up and down DEGs tested separately (1,281 and 1,775 gene symbols) against GO Biological Process 2026, KEGG 2021 Human and MSigDB Hallmark 2020.
+- **Up in tumor:** E2F targets, G2-M checkpoint, Myc targets, DNA replication, cell cycle (proliferation); epithelial-mesenchymal transition, ECM organisation (matrix remodelling). **Down in tumor:** mineral absorption, xenobiotic/bile-acid/fatty-acid metabolism (normal colon function); T-cell and B-cell receptor signalling (lymphocyte signal).
+
+**Status: ✅ Weeks 1–7 complete.** Remaining: Week 8 — final write-up (methods, results, interpretation, limitations), README polish and final push.
